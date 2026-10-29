@@ -1,0 +1,44 @@
+nums = [5, 2, 8, 1]
+
+print(sorted(nums))                  # [1, 2, 5, 8]   ← 返回新列表，nums 不变
+print(nums.sort())                   # None            ← 原地排序，返回 None！
+print(nums)                          # [1, 2, 5, 8]   ← 上一行已把 nums 改了
+
+nums = [5, 2, 8, 1]
+
+print(sorted(nums))    # [1, 2, 5, 8]      ← 返回新列表，nums 不变
+print(nums.sort())     # None              ← 原地排序，返回 None！
+print(nums)            # [1, 2, 5, 8]      ← 此时 nums 已经被改了
+
+
+
+def add(self):
+    content = input("记账内容：")
+    try:
+        if(float(content)>=0.0):
+            self.save
+    except(ValueError or float(content)<=0.0):
+            print("输入错误")
+    
+    # TODO 1：输入金额，用 try/except 防止乱输（循环直到输对）
+    # 提示：金额可能是负数，用 float() 或 int()
+    ...
+
+    # TODO 2：生成时间戳
+    ts = datetime.now().strftime("%Y-%m-%d %H:%M")
+
+    # TODO 3：组成字典，加进 self.records
+    ...
+
+    def add(self):
+        content = input("几张内容：")
+        while True:
+            try:
+                amount=flaot(input("金额（正数收入，负数支出）："))
+                break
+            except ValueError:
+                print("请输入数字！")
+        ts = datetime.now().strftime("%Y-%m-%d %H:%M")
+        self.records.append({"时间":ts,"内容":content,"金额":amount})
+        self.save()
+        print("已记录！")
