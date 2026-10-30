@@ -1,0 +1,85 @@
+#模块与导入
+#1
+import math
+print(math.sqrt(16))
+
+#2 导入指定内容
+from math import sqrt ,pi
+print(sqrt(16))
+print
+
+#3 导入并且取别名
+import math as m 
+print(m.sqrt(16))
+
+#4 万能
+from math import *
+
+
+#建一个模块文件mymodule.py
+def greet(name):
+    return f"你好，{name}"
+def add(a,b):
+    return a+b
+PI = 3.14
+
+#在另外一个文件导入
+import mymodule
+print(mymodule.greet("小明"))
+print(mymodule.add(3,5))
+print(mymodule.PI)
+#两个文件要放在同一文件夹
+
+# mymodule.py
+def greet(name):
+    return f"你好，{name}！"
+
+print("这行会执行")      # ← 这句在导入时也会跑！
+
+#当你在 main.py 里 import mymodule 时，mymodule.py 会被完整执行一遍，print("这行会执行") 也会打印——这通常不是我们想要的。
+
+#解决办法：把"执行代码"放进这个块里
+# mymodule.py
+def greet(name):
+    return f"你好，{name}！"
+
+if __name__ == "__main__":
+    # ⬇ 只有"直接运行这个文件"时才执行
+    # ⬇ 被别人 import 时，这里面的代码不执行
+    print(greet("测试"))
+
+
+#标准库补充
+import math
+print(math.sqrt(16))      # 4.0   开方
+print(math.floor(3.7))    # 3     向下取整
+print(math.ceil(3.2))     # 4     向上取整
+print(math.pi)            # 3.14159...
+
+import time
+print(time.time())        # 时间戳（秒）
+time.sleep(1)             # 暂停1秒
+
+import os
+print(os.getcwd())        # 当前工作目录
+print(os.listdir("."))    # 列出当前目录文件
+
+import math
+result_1=math.pow(2,10)
+result_2=math.sqrt(25,2)
+print(result_1,result_2)
+print(pi)
+
+#mytools.py
+import math
+def square(n):
+    return math.pow(n,2)
+def is_even(n):
+    if n%2==0:
+        return True
+    else:
+        return None
+#main.py
+import mytools
+n=int(input())
+print(mytools.square(n),mytools.is_even(n))

@@ -1,0 +1,71 @@
+import json
+import os
+from datetime import datetime
+
+
+class Bookkeeping:
+    def __init__(self):
+        self.file = "records.json"
+        self.records = self.load()
+
+    def load(self):
+        if os.path.exists(self.file):
+            with open(self.file, "r", encoding="utf-8") as f:
+                return json.load(f)
+        return []
+
+    def save(self):
+        with open(self.file, "w", encoding="utf-8") as f:
+            json.dump(self.records, f, ensure_ascii=False, indent=4)
+
+    def add(self):
+        content = input("记账内容：")
+        while True:
+            try:
+                amount = float(input("金额（正数收入，负数支出）："))
+                break
+            except ValueError:
+                print("请输入数字！")
+        ts = datetime.now().strftime("%Y-%m-%d %H:%M")
+        self.records.append({"时间": ts, "内容": content, "金额": amount})
+        self.save()
+        print("已记录！")
+
+    def show(self):
+        if not self.records:
+            print("还没有记录")
+            return
+        print("\n==== 所有记录 ====")
+        for r in self.records:
+            print(f"时间：{r['时间']}  内容：{r['内容']}  金额：{r['金额']}")
+        print(f"共 {len(self.records)} 笔")
+
+    def balance(self):
+        income = sum([r["金额"] for r in self.records if r["金额"] > 0])
+        expense = sum([r["金额"] for r in self.records if r["金额"] < 0])
+        total = income + expense
+        print(f"总收入：{income} 元")
+        print(f"总支出：{expense} 元")
+        print(f"当前余额：{total} 元")
+
+
+# ===== 程序入口 =====
+book = Bookkeeping()
+while True:
+    print("\n==== 记账本 ====")
+    print("1. 添加一笔")
+    print("2. 查看所有记录")
+    print("3. 查看余额")
+    print("4. 退出")
+    choice = input("请选择：")
+    if choice == "1":
+        book.add()
+    elif choice == "2":
+        book.show()
+    elif choice == "3":
+        book.balance()
+    elif choice == "4":
+        print("再见！")
+        break
+    else:
+        print("无效选择，请重新输入")
